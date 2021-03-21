@@ -3,9 +3,12 @@ import React, {Fragment} from 'react'
 import {Switch} from '../switch'
 
 // 🐨 create your React context here with React.createContext
+const ToggleContext = React.createContext()
 
 class Toggle extends React.Component {
   // 🐨 expose the ToggleContext.Consumer as a static property of Toggle here.
+  static Provider = ToggleContext.Provider
+  static Consumer = ToggleContext.Consumer
   state = {on: false}
   toggle = () =>
     this.setState(
@@ -14,10 +17,11 @@ class Toggle extends React.Component {
     )
   render() {
     // 🐨 replace this with rendering the ToggleContext.Provider
-    return this.props.children({
-      on: this.state.on,
-      toggle: this.toggle,
-    })
+    return (
+      <Toggle.Provider value={this.state}>
+        {this.props.children}
+      </Toggle.Provider>
+    )
   }
 }
 
